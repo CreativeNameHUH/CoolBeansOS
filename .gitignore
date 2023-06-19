@@ -1,0 +1,8 @@
+Tools/WindowsBuildTool/.vs
+Tools/WindowsBuildTool/bin
+Tools/WindowsBuildTool/obj
+
+Boot/build
+Kernel/build
+
+VM/OS_Test/Logs

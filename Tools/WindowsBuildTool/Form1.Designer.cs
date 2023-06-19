@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.BootSelectButton = new System.Windows.Forms.Button();
             this.BootPathTextBox = new System.Windows.Forms.TextBox();
@@ -175,6 +176,8 @@
             // 
             // BootSettingsButton
             // 
+            this.BootSettingsButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BootSettingsButton.BackgroundImage")));
+            this.BootSettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BootSettingsButton.Location = new System.Drawing.Point(418, 3);
             this.BootSettingsButton.Name = "BootSettingsButton";
             this.BootSettingsButton.Size = new System.Drawing.Size(29, 23);
