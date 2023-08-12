@@ -5,7 +5,7 @@
         public NoConfigForm()
         {
             InitializeComponent();
-            Common.Paths = new BuildToolsPaths();
+            Common.Settings = new BuildToolsSettings();
         }
 
         private void YesButton_Click(object sender, EventArgs e)

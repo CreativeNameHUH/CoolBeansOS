@@ -8,6 +8,9 @@
         private readonly string _bootPath;
         private readonly string _kernelPath;
 
+        private string _nasmParams = " -f elf32";
+        private string _gccParams = " -m32 -static -fno-asynchronous-unwind-tables -nostdlib -nodefaultlibs";
+
         public BuildFile(string bootPath, string kernelPath)
         {
             _bootPath = bootPath;
@@ -23,7 +26,7 @@
                 linkerFile.Close();
             }
 
-            if (Common.Paths == null)
+            if (Common.Settings == null)
                 return null;
 
             if (File.Exists(FILE_PATH))
@@ -31,12 +34,24 @@
 
             StreamWriter buildFile = new StreamWriter(FILE_PATH);
 
+            if (Common.Settings.IsWErrorEnabled)
+            {
+                _nasmParams += " -Werror";
+                _gccParams  += " -Werror";
+            }
+
+            if (Common.Settings.IsWAllEnabled)
+            {
+                _nasmParams += " -Wall";
+                _gccParams += " -Wall";
+            }
+
             buildFile.WriteLine(GetTitle());
             AddBootFiles(buildFile);
             AddKernelFiles(buildFile);
             
-            // TODO: VBoxManage shouldn't be hardcoded here!!!
-            buildFile.WriteLine("\nVBoxManage convertfromraw build\\bootloader.bin build\\bootloader.vdi --format VHD");
+            if (Common.Settings.IsVBoxEnabled)
+                buildFile.WriteLine("\nVBoxManage convertfromraw build\\bootloader.bin build\\bootloader.vdi --format VHD");
 
             buildFile.Close();
             return FILE_PATH;
@@ -48,11 +63,13 @@
             buildFile.WriteLine("\n:: === BOOT COMPILE COMMANDS ===\n");
 
             string buildPath = _bootPath.Replace("\\src", "\\build");
-            buildFile.WriteLine("del \"" + buildPath + "\"");
+            buildFile.WriteLine("rd /s /q \"" + buildPath + "\"");
             buildFile.WriteLine("mkdir \"" + buildPath + "\"\n");
 
-            string begin = "\"" + Common.Paths.NasmPath + "\\nasm\" -f elf32 \"";
-            
+#pragma warning disable CS8602 // Null dereference is not possible. We are checking for null in MakeFile() function
+            string begin = "\"" + Common.Settings.NasmPath + "\\nasm\"" + _nasmParams + "\" ";
+#pragma warning restore CS8602
+
             string[] files = Directory.GetFiles(_bootPath);
             string[] objFiles = new string[files.Length];
             for (int index = 0; index < files.Length; index++)
@@ -77,8 +94,8 @@
                 objFiles[index] = firstFile;
             }
 
-            buildFile.Write("\"" + Common.Paths.GccPath +
-                            "\\gcc\" -m32 -static -fno-asynchronous-unwind-tables -nostdlib -nodefaultlibs");
+            buildFile.Write("\"" + Common.Settings.GccPath +
+                            "\\gcc\"" + _gccParams);
             foreach (string file in objFiles)
                 buildFile.Write(" \"" + file + "\"");
 
@@ -86,7 +103,7 @@
             buildFile.WriteLine("objcopy -O binary \"" + buildPath + "\\linked_bootloader.bin\" \"" + buildPath + "\\bootloader.bin\"\n");
 
             foreach (string file in objFiles)
-                buildFile.WriteLine("del /f \"" + file + "\"");
+                buildFile.WriteLine("del /f /q \"" + file + "\"");
         }
 
         private void AddKernelFiles(StreamWriter buildFile)
@@ -94,7 +111,7 @@
             buildFile.WriteLine("\n:: === KERNEL COMPILE COMMANDS ===\n");
 
             string buildPath = _kernelPath.Replace("\\src", "\\build");
-            buildFile.WriteLine("del \"" + buildPath + "\"");
+            buildFile.WriteLine("rd /s /q \"" + buildPath + "\"");
             buildFile.WriteLine("mkdir \"" + buildPath + "\"\n");
         }
 
@@ -102,6 +119,7 @@
         {
             return ":: === AUTO GENERATED COMPILE COMMANDS AT: " + DateTime.Now + " ===";
         }
+
         private static string GetFilename(string file)
         {
             string filename = "";

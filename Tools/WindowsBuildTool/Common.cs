@@ -3,20 +3,24 @@ using File = System.IO.File;
 
 namespace WindowsBuildTool
 {
-    internal class BuildToolsPaths
+    internal class BuildToolsSettings
     {
         public string MsysPath;
         public string GccPath;
         public string NasmPath;
 
-        public BuildToolsPaths()
+        public bool IsVBoxEnabled;
+        public bool IsWErrorEnabled;
+        public bool IsWAllEnabled;
+
+        public BuildToolsSettings()
         {
             MsysPath = @"C:\msys64";
             GccPath = @"C:\msys64\mingw64\bin";
             NasmPath = @"C:\Program Files\NASM";
         }
 
-        public BuildToolsPaths(string msysPath, string gccPath, string nasmPath)
+        public BuildToolsSettings(string msysPath, string gccPath, string nasmPath)
         {
             MsysPath = msysPath;
             GccPath = gccPath;
@@ -26,7 +30,7 @@ namespace WindowsBuildTool
 
     internal static class Common
     {
-        public static BuildToolsPaths? Paths;
+        public static BuildToolsSettings? Settings;
 
         private const string SETTINGS_PATH = @"BuildToolsSettings.json";
 
@@ -36,17 +40,17 @@ namespace WindowsBuildTool
                 return false;
 
             string jsonString = File.ReadAllText(SETTINGS_PATH);
-            Paths = JsonConvert.DeserializeObject<BuildToolsPaths>(jsonString);
+            Settings = JsonConvert.DeserializeObject<BuildToolsSettings>(jsonString);
 
-            return Paths is not null;
+            return Settings is not null;
         }
 
         public static bool SaveBuildToolsPaths()
         {
-            if (Paths is null)
+            if (Settings is null)
                 return false;
 
-            string jsonString = JsonConvert.SerializeObject(Paths);
+            string jsonString = JsonConvert.SerializeObject(Settings);
             File.WriteAllText(SETTINGS_PATH, jsonString);
             return true;
         }

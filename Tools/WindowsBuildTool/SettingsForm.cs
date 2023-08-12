@@ -12,12 +12,22 @@
             _parent = parent;
             _parent.Visible = false;
 
-            if (Common.Paths is null)
+            if (Environment.GetEnvironmentVariable(@"VBoxManage") == null)
+            {
+                VBoxCheckBox.Enabled = false;
+                VBoxCheckBox.Checked = false;
+            }
+
+            if (Common.Settings is null)
                 return;
 
-            MsysPathTextBox.Text = Common.Paths.MsysPath;
-            GccPathTextBox.Text  = Common.Paths.GccPath;
-            NasmPathTextBox.Text = Common.Paths.NasmPath;
+            MsysPathTextBox.Text = Common.Settings.MsysPath;
+            GccPathTextBox.Text  = Common.Settings.GccPath;
+            NasmPathTextBox.Text = Common.Settings.NasmPath;
+
+            VBoxCheckBox.Checked = Common.Settings.IsVBoxEnabled;
+            WErrorCheckBox.Checked = Common.Settings.IsWErrorEnabled;
+            WAllCheckBox.Checked = Common.Settings.IsWAllEnabled;
         }
 
         private void MsysSelectButton_Click(object sender, EventArgs e)
@@ -43,9 +53,14 @@
                 return;
             }
 
-            Common.Paths = new BuildToolsPaths(MsysPathTextBox.Text,
-                                               GccPathTextBox.Text,
-                                               NasmPathTextBox.Text);
+            Common.Settings = new BuildToolsSettings(MsysPathTextBox.Text,
+                GccPathTextBox.Text,
+                NasmPathTextBox.Text)
+            {
+                IsVBoxEnabled = VBoxCheckBox.Checked,
+                IsWErrorEnabled = WErrorCheckBox.Checked,
+                IsWAllEnabled = WAllCheckBox.Checked
+            };
 
             if (!Common.SaveBuildToolsPaths())
                 throw new Exception("Error when saving.");
@@ -62,6 +77,11 @@
         {
             _parent.Visible = true;
             Close();
+        }
+
+        private void VBoxCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // does nothing.
         }
     }
 }

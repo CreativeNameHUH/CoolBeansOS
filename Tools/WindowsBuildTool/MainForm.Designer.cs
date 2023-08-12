@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BootSettingsButton = new System.Windows.Forms.Button();
             this.BootSelectButton = new System.Windows.Forms.Button();
             this.BootPathTextBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -42,7 +43,6 @@
             this.SettingsButton = new System.Windows.Forms.Button();
             this.OutputTextBox = new System.Windows.Forms.TextBox();
             this.BuildButton = new System.Windows.Forms.Button();
-            this.BootSettingsButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -58,6 +58,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(776, 32);
             this.panel1.TabIndex = 0;
+            // 
+            // BootSettingsButton
+            // 
+            this.BootSettingsButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BootSettingsButton.BackgroundImage")));
+            this.BootSettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BootSettingsButton.Location = new System.Drawing.Point(418, 3);
+            this.BootSettingsButton.Name = "BootSettingsButton";
+            this.BootSettingsButton.Size = new System.Drawing.Size(29, 23);
+            this.BootSettingsButton.TabIndex = 2;
+            this.BootSettingsButton.UseVisualStyleBackColor = true;
+            this.BootSettingsButton.Click += new System.EventHandler(this.BootSettingsButton_Click);
             // 
             // BootSelectButton
             // 
@@ -157,10 +168,10 @@
             // 
             // OutputTextBox
             // 
-            this.OutputTextBox.Enabled = false;
             this.OutputTextBox.Location = new System.Drawing.Point(3, 32);
             this.OutputTextBox.Multiline = true;
             this.OutputTextBox.Name = "OutputTextBox";
+            this.OutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.OutputTextBox.Size = new System.Drawing.Size(770, 277);
             this.OutputTextBox.TabIndex = 1;
             // 
@@ -174,16 +185,6 @@
             this.BuildButton.UseVisualStyleBackColor = true;
             this.BuildButton.Click += new System.EventHandler(this.BuildButton_Click);
             // 
-            // BootSettingsButton
-            // 
-            this.BootSettingsButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BootSettingsButton.BackgroundImage")));
-            this.BootSettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.BootSettingsButton.Location = new System.Drawing.Point(418, 3);
-            this.BootSettingsButton.Name = "BootSettingsButton";
-            this.BootSettingsButton.Size = new System.Drawing.Size(29, 23);
-            this.BootSettingsButton.TabIndex = 2;
-            this.BootSettingsButton.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -195,6 +196,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "Build Tool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

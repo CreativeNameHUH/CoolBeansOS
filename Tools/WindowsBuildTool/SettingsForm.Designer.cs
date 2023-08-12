@@ -40,10 +40,15 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.ExitButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.WAllCheckBox = new System.Windows.Forms.CheckBox();
+            this.WErrorCheckBox = new System.Windows.Forms.CheckBox();
+            this.VBoxCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -131,7 +136,7 @@
             // 
             this.panel4.Controls.Add(this.ExitButton);
             this.panel4.Controls.Add(this.SaveButton);
-            this.panel4.Location = new System.Drawing.Point(12, 126);
+            this.panel4.Location = new System.Drawing.Point(12, 164);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(420, 43);
             this.panel4.TabIndex = 4;
@@ -156,11 +161,55 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.WAllCheckBox);
+            this.panel5.Controls.Add(this.WErrorCheckBox);
+            this.panel5.Controls.Add(this.VBoxCheckBox);
+            this.panel5.Location = new System.Drawing.Point(12, 126);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(420, 32);
+            this.panel5.TabIndex = 4;
+            // 
+            // WAllCheckBox
+            // 
+            this.WAllCheckBox.AutoSize = true;
+            this.WAllCheckBox.Location = new System.Drawing.Point(153, 3);
+            this.WAllCheckBox.Name = "WAllCheckBox";
+            this.WAllCheckBox.Size = new System.Drawing.Size(54, 19);
+            this.WAllCheckBox.TabIndex = 2;
+            this.WAllCheckBox.Text = "-Wall";
+            this.WAllCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // WErrorCheckBox
+            // 
+            this.WErrorCheckBox.AutoSize = true;
+            this.WErrorCheckBox.Location = new System.Drawing.Point(213, 3);
+            this.WErrorCheckBox.Name = "WErrorCheckBox";
+            this.WErrorCheckBox.Size = new System.Drawing.Size(67, 19);
+            this.WErrorCheckBox.TabIndex = 1;
+            this.WErrorCheckBox.Text = "-Werror";
+            this.WErrorCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // VBoxCheckBox
+            // 
+            this.VBoxCheckBox.AutoSize = true;
+            this.VBoxCheckBox.Checked = true;
+            this.VBoxCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.VBoxCheckBox.Location = new System.Drawing.Point(286, 3);
+            this.VBoxCheckBox.Name = "VBoxCheckBox";
+            this.VBoxCheckBox.Size = new System.Drawing.Size(126, 19);
+            this.VBoxCheckBox.TabIndex = 0;
+            this.VBoxCheckBox.Text = "Create VBox image";
+            this.VBoxCheckBox.UseVisualStyleBackColor = true;
+            this.VBoxCheckBox.CheckedChanged += new System.EventHandler(this.VBoxCheckBox_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 172);
+            this.ClientSize = new System.Drawing.Size(444, 224);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -174,6 +223,8 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -192,5 +243,9 @@
         private Panel panel4;
         private Button ExitButton;
         private Button SaveButton;
+        private Panel panel5;
+        private CheckBox VBoxCheckBox;
+        private CheckBox WErrorCheckBox;
+        private CheckBox WAllCheckBox;
     }
 }
